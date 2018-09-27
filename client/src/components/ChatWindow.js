@@ -37,15 +37,15 @@ class ChatWindow extends React.Component {
 
   componentDidMount() {
     window.MessageBus.start()
-    const {dispatch} = this.props
-    this.props.dispatch(setFlash('Welcome to React Chat', 'green'))
+    const { dispatch } = this.props
+    dispatch(setFlash('Welcome to React Chat', 'green'))
 
     window.MessageBus.subscribe("/chat_channel", (data) => {
       dispatch(addMessage(data))
     })
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     window.MessageBus.unsubscribe("/chat_channel")
   }
   
@@ -68,10 +68,9 @@ class ChatWindow extends React.Component {
 
   addMessage = (e) => {
     e.preventDefault()
-    const { user: { email } } = this.props
     const { message } = this.state
-    axios.post('/api/messages', {email, body: message})
-      .then( () => this.setState({ message: ''}))
+    axios.post('/api/messages', { body: message })
+      .then( () => this.setState({ message: '' }) )
   }
 
   render() {
